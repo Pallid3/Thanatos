@@ -1,0 +1,19 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+# Environment
+.env
+venv/
+bin/
+include/
+lib/
+lib64/
+pyvenv.cfg
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
