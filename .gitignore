@@ -17,3 +17,7 @@ __pycache__/
 
 # OS files
 .DS_Store
+
+# JSON
+osu_user.json
+osu_user.jsnol
