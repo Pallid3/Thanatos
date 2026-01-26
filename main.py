@@ -4,7 +4,7 @@ import logging
 from dotenv import load_dotenv
 import os
 import requests
-from datetime import time
+from datetime import time, timezone
 
 import oss
 
@@ -21,6 +21,7 @@ bot = commands.Bot(command_prefix="+", intents=intents)
 
 @bot.event
 async def on_ready():
+    req.start()
     print(f"We are cute with {bot.user.name}")
 
 @bot.event
@@ -39,13 +40,18 @@ async def hello(ctx):
     print(ctx)
     await ctx.send(f"Hello {ctx.author.mention}!")
 
-@tasks.loop(time=time(2, 0))   # runs 5 or 4 am in estonia cba
-async def req(ctx):
+CHANNEL_ID = 1200056673197371507  # replace
+
+@tasks.loop(time=time(hour=2, minute=0, tzinfo=timezone.utc))
+async def req():
     print("Alustab REQ")
     oss.make_user_request("kellad", API_KEY)
     entries = oss.read_data()
-    await ctx.send(f"Data is: {entries[-1]}!")
-    print("Lõptab REQ")
+
+    channel = bot.get_channel(CHANNEL_ID)
+    if channel:
+        await channel.send(f"Data is: {entries[-1]}!")
+    print(f"Data is: {entries[-1]}! owo")
 
 @bot.command()
 async def lastone(ctx):
