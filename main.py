@@ -7,6 +7,7 @@ import requests
 from datetime import time, timezone
 
 import oss
+import analyze
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
@@ -47,15 +48,22 @@ async def req():
     print("Alustab REQ")
     oss.make_user_request("kellad", API_KEY)
     entries = oss.read_data()
-
+    a = analyze.compare_last_two()
     channel = bot.get_channel(CHANNEL_ID)
     if channel:
         await channel.send(f"Data is: {entries[-1]}!")
+        await channel.send(f"Playcount increased by: {a}")
     print(f"Data is: {entries[-1]}! owo")
 
 @bot.command()
 async def lastone(ctx):
     entries = oss.read_data()
     await ctx.send(f"Data is: {entries[-1]}!")
+
+@bot.command()
+async def lasttwo(ctx):
+    a = analyze.compare_last_two()
+    await ctx.send(f"Playcount increased by: {a}")
+
 
 bot.run(token, log_handler=hander, log_level=logging.DEBUG)
