@@ -16,6 +16,12 @@ API_KEY = os.getenv('OSU_API_KEY')
 with open("bad_words.txt", "r") as file:
     bad_words = [line.strip().lower() for line in file]
 
+with open("special_bad_words.txt", "r") as file: # this function gets line of words and allows to have each word splited up.
+    for line in file:
+        word = line.strip().lower().split()
+        special_bad_words.append(word)
+
+
 hander = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
 intents = discord.Intents.default()
 intents.message_content = True
@@ -33,7 +39,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
     
-    if message.content.lower() in bad_words:
+    if message.content.lower() in bad_words or message.content.lower() in special_bad_words:
         print(message.author, " tried to say ", message.content) 
         await message.delete()
         await message.channel.send(f"{message.author.mention}, don't use this word, you silly baka ! >:c")
