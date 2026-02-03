@@ -13,6 +13,9 @@ load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
 API_KEY = os.getenv('OSU_API_KEY')
 
+with open("bad_words.txt", "r") as file:
+    bad_words = [line.strip() for line in file]
+
 hander = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
 intents = discord.Intents.default()
 intents.message_content = True
@@ -30,7 +33,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
     
-    if "shit" in message.content.lower():
+    if message.content.lower() in bad_words:
         await message.delete()
         await message.channel.send(f"{message.author.mention}, don't use this word, you silly baka ! >:c")
     
