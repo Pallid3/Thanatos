@@ -34,6 +34,7 @@ async def on_message(message):
         return
     
     if message.content.lower() in bad_words:
+        print(message.author, " tried to say ", message.content.lower) 
         await message.delete()
         await message.channel.send(f"{message.author.mention}, don't use this word, you silly baka ! >:c")
     
