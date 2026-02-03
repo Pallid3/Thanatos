@@ -16,6 +16,7 @@ API_KEY = os.getenv('OSU_API_KEY')
 with open("bad_words.txt", "r") as file:
     bad_words = [line.strip().lower() for line in file]
 
+special_bad_words = []
 with open("special_bad_words.txt", "r") as file: # this function gets line of words and allows to have each word splited up.
     for line in file:
         word = line.strip().lower().split()
