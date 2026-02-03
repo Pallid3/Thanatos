@@ -21,3 +21,5 @@ __pycache__/
 # JSON
 osu_user.json
 osu_user.jsonl
+
+bad_words.txt
