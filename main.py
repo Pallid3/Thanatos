@@ -33,8 +33,8 @@ async def on_message(message):
     if message.author == bot.user:
         return
     
-    if message.content.lower() in bad_words:
-        print(message.author, " tried to say ", message.content.lower) 
+    if message.content.lower() in bad_words.lower():
+        print(message.author, " tried to say ", message.content) 
         await message.delete()
         await message.channel.send(f"{message.author.mention}, don't use this word, you silly baka ! >:c")
     
