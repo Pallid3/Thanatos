@@ -22,6 +22,23 @@ with open("special_bad_words.txt", "r") as file: # this function gets line of wo
         word = line.strip().lower().split()
         special_bad_words.append(word)
 
+def check_for_triggers(message, trigger_list):
+    # 1. Clean the message: lowercase it and split into a set of words
+    message_words = set(message.lower().split())
+    
+    for trigger_group in trigger_list:
+        # 2. Convert the trigger line into a set
+        trigger_set = set(trigger_group)
+        print(trigger_group)
+        # 3. Check if all trigger words are a subset of the message words
+        if trigger_set.issubset(message_words):
+            print("true")
+            return True
+    print(" false")
+    return False
+
+
+
 print(special_bad_words) # temp print
 
 hander = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
@@ -38,13 +55,20 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    print(message.content)
     if message.author == bot.user:
         return
-    
-    if message.content.lower() in bad_words or message.content.lower() in special_bad_words:
+        print("bot")
+    # if check_for_triggers(user_message=message.content.lower(), special_bad_words=special_bad_words):
+    #     kill_switch = True
+    #     print("owos", kill_switch)
+    #     pass
+    # print("uwuus")
+    if message.content.lower() in bad_words or check_for_triggers(user_message=message.content.lower(), special_bad_words=special_bad_words):
         print(message.author, " tried to say ", message.content) 
         await message.delete()
         await message.channel.send(f"{message.author.mention}, don't use this word, you silly baka ! >:c")
+        kill_switch == False
     
     await bot.process_commands(message)
 
