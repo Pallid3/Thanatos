@@ -21,6 +21,7 @@ with open("special_bad_words.txt", "r") as file: # this function gets line of wo
         word = line.strip().lower().split()
         special_bad_words.append(word)
 
+print(special_bad_words) # temp print
 
 hander = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
 intents = discord.Intents.default()
