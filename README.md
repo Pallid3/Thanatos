@@ -3,6 +3,7 @@ I don't remember
 
 ```
 git clone https://github.com/Pallid3/Thanatos/tree/owomain
+cd Thanatos
 pip install -r requirements.txt
 ```
 `nano ./.env`
