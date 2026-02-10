@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 import os
 import requests
 from datetime import time, timezone
-import re
 
 import oss
 import analyze
@@ -41,8 +40,9 @@ async def on_ready():
 async def on_message(message):
     if message.author == bot.user:
         return
-    
+
     if message.content.lower() in bad_words or message.content.lower() in special_bad_words:
+
         print(message.author, " tried to say ", message.content) 
         await message.delete()
         await message.channel.send(f"{message.author.mention}, don't use this word, you silly baka ! >:c")
@@ -54,7 +54,7 @@ async def on_message(message):
 
 # if "bananas" in words:
 #     print("Found it!")
-
+    # if message.content.lower() in bad_words or message.content.lower() in special_bad_words:
 
 
 @bot.command()
