@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 import requests
 from datetime import time, timezone
+import re
 
 import oss
 import analyze
@@ -47,6 +48,14 @@ async def on_message(message):
         await message.channel.send(f"{message.author.mention}, don't use this word, you silly baka ! >:c")
     
     await bot.process_commands(message)
+
+# sentence = message
+# words = re.findall(r"\b\w+\b", sentence.lower())
+
+# if "bananas" in words:
+#     print("Found it!")
+
+
 
 @bot.command()
 async def hello(ctx):
