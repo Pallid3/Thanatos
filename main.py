@@ -8,21 +8,19 @@ from datetime import time, timezone
 
 import oss
 import analyze
+from filterer import PhraseFilter
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
 API_KEY = os.getenv('OSU_API_KEY')
 
-with open("bad_words.txt", "r") as file:
-    bad_words = [line.strip().lower() for line in file]
-
-special_bad_words = []
-with open("special_bad_words.txt", "r") as file: # this function gets line of words and allows to have each word splited up.
+f = PhraseFilter()
+bad_words = []
+with open("bad_words.txt", "r") as file: # this function gets line of words and allows to have each word splited up.
     for line in file:
         word = line.strip().lower().split()
-        special_bad_words.append(word)
-
-print(special_bad_words) # temp print
+        bad_words.append(word)
+        f.add_phrase(word)
 
 hander = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
 intents = discord.Intents.default()
@@ -40,22 +38,12 @@ async def on_ready():
 async def on_message(message):
     if message.author == bot.user:
         return
-
-    if message.content.lower() in bad_words or message.content.lower() in special_bad_words:
-
+    if f.contains_banned(message.content):
         print(message.author, " tried to say ", message.content) 
         await message.delete()
         await message.channel.send(f"{message.author.mention}, don't use this word, you silly baka ! >:c")
     
     await bot.process_commands(message)
-
-# sentence = message
-# words = re.findall(r"\b\w+\b", sentence.lower())
-
-# if "bananas" in words:
-#     print("Found it!")
-    # if message.content.lower() in bad_words or message.content.lower() in special_bad_words:
-
 
 @bot.command()
 async def hello(ctx):
