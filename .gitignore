@@ -22,8 +22,13 @@ __pycache__/
 osu_user.json
 osu_user.jsonl
 
+# bad words
 bad_words.txt
 special_bad_words.txt
 
+# special people
+targets.txt
+
+# databases
 oss_stats.db
 *.db

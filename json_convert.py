@@ -1,7 +1,7 @@
 import sqlite3
 import json
 
-def jsonl_to_db(jsonl_file="osu_user.jsonl", db_file="oss_stats_migrated.db"):
+def jsonl_to_db(jsonl_file="osu_user.jsonl", db_file="oss_stats.db"):
     # Connect to (or create) new database
     connection = sqlite3.connect(db_file)
     cursor = connection.cursor()

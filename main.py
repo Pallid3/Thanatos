@@ -22,6 +22,11 @@ with open("bad_words.txt", "r") as file: # this function gets line of words and 
         bad_words.append(word)
         f.add_phrase(word)
 
+targets = []
+with open("targets.txt", "r") as file: # this function gets line of words and allows to have each word splited up.
+    for username in file:
+        targets.append(username)
+
 hander = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
 intents = discord.Intents.default()
 intents.message_content = True
@@ -55,24 +60,31 @@ CHANNEL_ID = 1200056673197371507  # replace
 @tasks.loop(time=time(hour=2, minute=0, tzinfo=timezone.utc))
 async def req():
     print("Alustab REQ")
-    oss.make_user_request("kellad", API_KEY)
-    entries = oss.read_data()
-    a = analyze.compare_last_two()
-    channel = bot.get_channel(CHANNEL_ID)
-    if channel:
-        await channel.send(f"Data is: {entries[-1]}!")
-        await channel.send(f"Playcount increased by: {a}")
-    print(f"Data is: {entries[-1]}! owo")
+    for username in targets:
+        oss.make_user_request(username, API_KEY)
+        a = analyze.compare_last_two_db(username)
+        channel = bot.get_channel(CHANNEL_ID)
+        if channel:
+            await channel.send(f"{username} playcount increased by: {a}")
+        print({username} playcount increased by: {a})
+
 
 @bot.command()
-async def lastone(ctx):
-    entries = oss.read_data()
-    await ctx.send(f"Data is: {entries[-1]}!")
+async def lasttwo(ctx, username: str = None):
+    if not username:
+        await ctx.send("Please provide a username! Example: `!lasttwo kellad`")
+        return
 
-@bot.command()
-async def lasttwo(ctx):
-    a = analyze.compare_last_two()
-    await ctx.send(f"Playcount increased by: {a}")
+    if not username_exists(username):
+        await ctx.send(f"Username `{username}` not found in the database.")
+        return
+
+    try:
+        diff = compare_last_two_db(username)
+        await ctx.send(f"{username}'s playcount increased by: {diff}")
+    except ValueError as e:
+        print("Error code: 727 ", e, )
+        await ctx.send("Error code: 727")
 
 
 bot.run(token, log_handler=hander, log_level=logging.DEBUG)
