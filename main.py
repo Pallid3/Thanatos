@@ -4,6 +4,7 @@ import logging
 from dotenv import load_dotenv
 import os
 import requests
+from time import sleep as py_sleep # pls don't get confclited :pray:
 from datetime import time, timezone
 
 import oss
@@ -67,6 +68,7 @@ async def req():
         if channel:
             await channel.send(f"{username} playcount increased by: {a}")
         print(f"{username} playcount increased by: {a}")
+        py_sleep(2) # we sleep 2 seconds, cuz I doubt I can do many reqeuest at the time lol
 
 
 @bot.command()
