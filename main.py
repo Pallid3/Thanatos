@@ -74,13 +74,15 @@ async def lasttwo(ctx, username: str = None):
     if not username:
         await ctx.send("Please provide a username! Example: `!lasttwo kellad`")
         return
-
+    print("what 0")
     if not username_exists(username):
+        print("what 1")
         await ctx.send(f"Username `{username}` not found in the database.")
         return
 
     try:
         diff = compare_last_two_db(username)
+        print("what 3")
         await ctx.send(f"{username}'s playcount increased by: {diff}")
     except ValueError as e:
         print("Error code: 727 ", e, )
