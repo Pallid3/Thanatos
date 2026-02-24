@@ -65,7 +65,7 @@ CHANNEL_ID = 1200056673197371507  # replace
 async def req():
     print("Alustab REQ")
     for username in targets:
-        oss.make_user_request(username, API_KEY, andmebaas="oss_stats.db")
+        oss.make_user_request(username, API_KEY, database="oss_stats.db")
         a = analyze.compare_last_two_db(username, database)
         channel = bot.get_channel(CHANNEL_ID)
         if channel:

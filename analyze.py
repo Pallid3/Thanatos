@@ -1,7 +1,7 @@
 import sqlite3
 
-def username_exists(username, db_file="oss_stats.db"):
-    connection = sqlite3.connect(db_file)
+def username_exists(username, database):
+    connection = sqlite3.connect(database)
     cursor = connection.cursor()
     cursor.execute(
         "SELECT 1 FROM stats WHERE username = ? LIMIT 1",
@@ -11,8 +11,8 @@ def username_exists(username, db_file="oss_stats.db"):
     connection.close()
     return exists
 
-def compare_last_two_db(username):
-    connection = sqlite3.connect("oss_stats.db")
+def compare_last_two_db(username, database):
+    connection = sqlite3.connect(database)
     cursor = connection.cursor()
 
     # Get all entries for this user, ordered by timestamp
