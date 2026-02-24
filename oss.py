@@ -20,8 +20,8 @@ class OsuUser:
             "timestamp": self.timestamp
         }
 
-    def pane_andmed_baasi(self):
-        connection = sqlite3.connect("oss_stats.db")
+    def pane_andmed_baasi(self, andmebaas):
+        connection = sqlite3.connect(andmebaas)
         cursor = connection.cursor()
 
         command1 = """CREATE TABLE IF NOT EXISTS
@@ -43,7 +43,7 @@ class OsuUser:
         obj.pp = data["pp"]
         return obj
 
-def make_user_request(username, API_KEY):
+def make_user_request(username, API_KEY, andmebaas):
     # username = "kellad"         # or a numeric user ID
     username = str(username)
     API_KEY = str(API_KEY)
@@ -60,7 +60,7 @@ def make_user_request(username, API_KEY):
     user_data = data[0]
 
     filtered_data = OsuUser(user_data)
-    filtered_data.pane_andmed_baasi()
+    filtered_data.pane_andmed_baasi(andmebaas)
 
 
     # with open("osu_user.jsonl", "a") as f:
