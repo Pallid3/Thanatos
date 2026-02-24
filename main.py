@@ -66,7 +66,7 @@ async def req():
         channel = bot.get_channel(CHANNEL_ID)
         if channel:
             await channel.send(f"{username} playcount increased by: {a}")
-        print({username} playcount increased by: {a})
+        print(f"{username} playcount increased by: {a}")
 
 
 @bot.command()
