@@ -1,4 +1,4 @@
-import sqlite3
+import sqlite3, os
 
 def username_exists(username, database):
     connection = sqlite3.connect(database)
@@ -17,14 +17,15 @@ def compare_last_two_db(username, database):
 
     # Get all entries for this user, ordered by timestamp
     cursor.execute(
-        "SELECT playcount, timestamp FROM stats WHERE username = ? ORDER BY timestamp ASC",
+        "SELECT playcount, timestamp FROM stats WHERE username = ? ORDER BY id ASC",
         (username,)
     )
     rows = cursor.fetchall()
     connection.close()
 
     if len(rows) < 2:
-        raise ValueError("Not enough data to compare from", username)
+        print("Not enough data to compare from", username)
+        return None
 
     # Take the last two playcounts
     playcount1 = rows[-2][0]  # second-to-last

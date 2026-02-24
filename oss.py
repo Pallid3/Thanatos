@@ -61,11 +61,6 @@ def make_user_request(username, API_KEY, database):
 
     filtered_data = OsuUser(user_data)
     filtered_data.pane_andmed_baasi(database)
-
-
-    # with open("osu_user.jsonl", "a") as f:
-    #     json.dump(filtered_data.to_dict(), f)
-    #     f.write("\n")
     return
 
 def read_data():

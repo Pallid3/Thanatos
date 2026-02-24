@@ -29,7 +29,7 @@ with open("bad_words.txt", "r") as file: # this function gets line of words and 
 targets = []
 with open("targets.txt", "r") as file:
     for username in file:
-        targets.append(username)
+        targets.append(username.strip())
 
 hander = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
 intents = discord.Intents.default()
@@ -65,14 +65,13 @@ CHANNEL_ID = 1200056673197371507  # replace
 async def req():
     print("Alustab REQ")
     for username in targets:
-        oss.make_user_request(username, API_KEY, database="oss_stats.db")
+        oss.make_user_request(username, API_KEY, database)
         a = analyze.compare_last_two_db(username, database)
         channel = bot.get_channel(CHANNEL_ID)
         if channel:
             await channel.send(f"{username} playcount increased by: {a}")
         print(f"{username} playcount increased by: {a}")
         py_sleep(2) # we sleep 2 seconds, cuz I doubt I can do many reqeuest at the time lol
-
 
 @bot.command()
 async def lasttwo(ctx, username: str = None):
