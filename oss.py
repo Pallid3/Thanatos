@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import json
 from datetime import datetime, time
+import sqlite3
 
 class OsuUser:
     def __init__(self, data):
@@ -18,6 +19,21 @@ class OsuUser:
             "pp": self.pp,
             "timestamp": self.timestamp
         }
+
+    def pane_andmed_baasi(self):
+        connection = sqlite3.connect("oss_stats.db")
+        cursor = connection.cursor()
+
+        command1 = """CREATE TABLE IF NOT EXISTS
+        stats(id INTEGER PRIMARY KEY, username TEXT, playcount INT, pp FLOAT, timestamp TEXT)"""
+        cursor.execute(command1)
+        # Ainuke tähtis osa. see salvestab andmed stats tabeli (ma loodan)
+        cursor.execute(
+        "INSERT INTO stats (username, playcount, pp, timestamp) VALUES (?, ?, ?, ?)",
+        (self.username, self.playcount, self.pp, self.timestamp)
+        )
+        connection.commit()
+        connection.close()
 
     @classmethod
     def from_dict(cls, data):
@@ -44,9 +60,12 @@ def make_user_request(username, API_KEY):
     user_data = data[0]
 
     filtered_data = OsuUser(user_data)
-    with open("osu_user.jsonl", "a") as f:
-        json.dump(filtered_data.to_dict(), f)
-        f.write("\n")
+    filtered_data.pane_andmed_baasi()
+
+
+    # with open("osu_user.jsonl", "a") as f:
+    #     json.dump(filtered_data.to_dict(), f)
+    #     f.write("\n")
     return
 
 def read_data():
@@ -56,37 +75,9 @@ def read_data():
             entries.append(json.loads(line))
     return entries
 
-# load_dotenv()
-# token = os.getenv('DISCORD_TOKEN')
-# API_KEY = os.getenv('OSU_API_KEY')
+
+load_dotenv()
+API_KEY = os.getenv('OSU_API_KEY')
 
 
-# make_user_request("kellad", API_KEY)
-
-# aaa = read_data()
-# print(aaa)
-# sorted_data = sorted(aaa, key=lambda x: x['timestamp'])
-# latest_two = sorted_data[-2:]
-# playcount1 = latest_two[0]['playcount']
-# playcount2 = latest_two[1]['playcount']
-
-
-# print("Latest two playcounts:", playcount1, playcount2)
-
-# if playcount2 > playcount1:
-#     print("Playcount increased by", playcount2 - playcount1)
-# elif playcount2 < playcount1:
-#     print("Playcount decreased by", playcount1 - playcount2)
-# else:
-#     print("Playcount did not change")
-
-
-
-
-
-# for e in entries:
-#     e["timestamp"] = datetime.fromisoformat(e["timestamp"])
-# latest = max(entries, key=lambda e: e["timestamp"])
-
-# print(latest)
-# print(latest["playcount"])
+make_user_request("kellad", API_KEY)
