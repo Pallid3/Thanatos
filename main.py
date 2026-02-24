@@ -81,7 +81,7 @@ async def lasttwo(ctx, username: str = None):
         return
 
     try:
-        diff = compare_last_two_db(username)
+        diff = analyze.compare_last_two_db(username)
         print("what 3")
         await ctx.send(f"{username}'s playcount increased by: {diff}")
     except ValueError as e:
