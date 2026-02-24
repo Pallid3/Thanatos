@@ -48,7 +48,7 @@ async def on_message(message):
         await message.delete()
         await message.channel.send(f"{message.author.mention}, don't use this word, you silly baka ! >:c")
     
-    await bot.process_commands(message)
+      await bot.process_commands(message)
 
 @bot.command()
 async def hello(ctx):
