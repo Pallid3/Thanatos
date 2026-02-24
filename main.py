@@ -59,7 +59,7 @@ async def hello(ctx):
     print(ctx)
     await ctx.send(f"Hello {ctx.author.mention}!")
 
-CHANNEL_ID = 1200056673197371507  # replace
+CHANNEL_ID = 830453487015428147  # replace
 
 @tasks.loop(time=time(hour=2, minute=0, tzinfo=timezone.utc))
 async def req():
