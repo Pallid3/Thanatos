@@ -56,4 +56,20 @@ def read_data():
             entries.append(json.loads(line))
     return entries
 
-print("test")
+import sqlite3
+
+def pane_andmed_baasi():
+    connection = sqlite3.connect("oss_stats.db")
+    cursor = connection.cursor()
+
+    command1 = """CREATE TABLE IF NOT EXISTS
+    stats(id INTEGER PRIMARY KEY, username TEXT, playcount INT, pp FLOAT, timestamp TEXT)"""
+    cursor.execute(command1)
+    # Ainuke tähtis osa. see salvestab andmed stats tabeli (ma loodan)
+    cursor.execute(
+    "INSERT INTO stats (username, playcount, pp, timestamp) VALUES (?, ?, ?, ?)",
+    (username, playcount, pp, timestamp)
+    )
+    connection.commit()
+    connection.close()
+
