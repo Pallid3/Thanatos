@@ -24,3 +24,6 @@ osu_user.jsonl
 
 bad_words.txt
 special_bad_words.txt
+
+oss_stats.db
+*.db
