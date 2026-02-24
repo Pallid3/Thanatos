@@ -56,37 +56,4 @@ def read_data():
             entries.append(json.loads(line))
     return entries
 
-# load_dotenv()
-# token = os.getenv('DISCORD_TOKEN')
-# API_KEY = os.getenv('OSU_API_KEY')
-
-
-# make_user_request("kellad", API_KEY)
-
-# aaa = read_data()
-# print(aaa)
-# sorted_data = sorted(aaa, key=lambda x: x['timestamp'])
-# latest_two = sorted_data[-2:]
-# playcount1 = latest_two[0]['playcount']
-# playcount2 = latest_two[1]['playcount']
-
-
-# print("Latest two playcounts:", playcount1, playcount2)
-
-# if playcount2 > playcount1:
-#     print("Playcount increased by", playcount2 - playcount1)
-# elif playcount2 < playcount1:
-#     print("Playcount decreased by", playcount1 - playcount2)
-# else:
-#     print("Playcount did not change")
-
-
-
-
-
-# for e in entries:
-#     e["timestamp"] = datetime.fromisoformat(e["timestamp"])
-# latest = max(entries, key=lambda e: e["timestamp"])
-
-# print(latest)
-# print(latest["playcount"])
+print("test")
