@@ -2,7 +2,7 @@
 I don't remember
 
 ```
-git clone https://github.com/Pallid3/Thanatos/tree/owomain
+git clone https://github.com/Pallid3/Thanatos/tree/main
 cd Thanatos
 pip install -r requirements.txt
 ```
