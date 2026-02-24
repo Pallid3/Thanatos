@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import json
 from datetime import datetime, time
+import sqlite3
 
 class OsuUser:
     def __init__(self, data):
@@ -18,6 +19,21 @@ class OsuUser:
             "pp": self.pp,
             "timestamp": self.timestamp
         }
+
+    def pane_andmed_baasi(self):
+        connection = sqlite3.connect("oss_stats.db")
+        cursor = connection.cursor()
+
+        command1 = """CREATE TABLE IF NOT EXISTS
+        stats(id INTEGER PRIMARY KEY, username TEXT, playcount INT, pp FLOAT, timestamp TEXT)"""
+        cursor.execute(command1)
+        # Ainuke tähtis osa. see salvestab andmed stats tabeli (ma loodan)
+        cursor.execute(
+        "INSERT INTO stats (username, playcount, pp, timestamp) VALUES (?, ?, ?, ?)",
+        (self.username, self.playcount, self.pp, self.timestamp)
+        )
+        connection.commit()
+        connection.close()
 
     @classmethod
     def from_dict(cls, data):
@@ -44,9 +60,12 @@ def make_user_request(username, API_KEY):
     user_data = data[0]
 
     filtered_data = OsuUser(user_data)
-    with open("osu_user.jsonl", "a") as f:
-        json.dump(filtered_data.to_dict(), f)
-        f.write("\n")
+    filtered_data.pane_andmed_baasi()
+
+
+    # with open("osu_user.jsonl", "a") as f:
+    #     json.dump(filtered_data.to_dict(), f)
+    #     f.write("\n")
     return
 
 def read_data():
@@ -56,20 +75,9 @@ def read_data():
             entries.append(json.loads(line))
     return entries
 
-import sqlite3
 
-def pane_andmed_baasi():
-    connection = sqlite3.connect("oss_stats.db")
-    cursor = connection.cursor()
+load_dotenv()
+API_KEY = os.getenv('OSU_API_KEY')
 
-    command1 = """CREATE TABLE IF NOT EXISTS
-    stats(id INTEGER PRIMARY KEY, username TEXT, playcount INT, pp FLOAT, timestamp TEXT)"""
-    cursor.execute(command1)
-    # Ainuke tähtis osa. see salvestab andmed stats tabeli (ma loodan)
-    cursor.execute(
-    "INSERT INTO stats (username, playcount, pp, timestamp) VALUES (?, ?, ?, ?)",
-    (username, playcount, pp, timestamp)
-    )
-    connection.commit()
-    connection.close()
 
+make_user_request("kellad", API_KEY)
