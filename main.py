@@ -15,6 +15,9 @@ load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
 API_KEY = os.getenv('OSU_API_KEY')
 
+database = "oss_stats.db"
+
+
 f = PhraseFilter()
 bad_words = []
 with open("bad_words.txt", "r") as file: # this function gets line of words and allows to have each word splited up.
@@ -63,7 +66,7 @@ async def req():
     print("Alustab REQ")
     for username in targets:
         oss.make_user_request(username, API_KEY, andmebaas="oss_stats.db")
-        a = analyze.compare_last_two_db(username)
+        a = analyze.compare_last_two_db(username, database)
         channel = bot.get_channel(CHANNEL_ID)
         if channel:
             await channel.send(f"{username} playcount increased by: {a}")
@@ -76,11 +79,11 @@ async def lasttwo(ctx, username: str = None):
     if not username:
         await ctx.send("Please provide a username! Example: `!lasttwo kellad`")
         return
-    if not analyze.username_exists(username):
+    if not analyze.username_exists(username, database):
         await ctx.send(f"Username `{username}` not found in the database.")
         return
     try:
-        diff = analyze.compare_last_two_db(username)
+        diff = analyze.compare_last_two_db(username, database)
         await ctx.send(f"{username}'s playcount increased by: {diff}")
     except ValueError as e:
         print("Error code: 727 ", e, )
