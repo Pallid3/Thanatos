@@ -23,7 +23,7 @@ with open("bad_words.txt", "r") as file: # this function gets line of words and 
         f.add_phrase(word)
 
 targets = []
-with open("targets.txt", "r") as file: # this function gets line of words and allows to have each word splited up.
+with open("targets.txt", "r") as file:
     for username in file:
         targets.append(username)
 
@@ -48,7 +48,7 @@ async def on_message(message):
         await message.delete()
         await message.channel.send(f"{message.author.mention}, don't use this word, you silly baka ! >:c")
     
-      await bot.process_commands(message)
+    await bot.process_commands(message)
 
 @bot.command()
 async def hello(ctx):
