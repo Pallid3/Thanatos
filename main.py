@@ -47,6 +47,10 @@ async def on_ready():
 async def on_message(message):
     if message.author == bot.user:
         return
+    
+    if bot.user in message.mentions:
+        await message.channel.send(f"You thiniking of me >.<")
+    
     if f.contains_banned(message.content):
         print(message.author, " tried to say ", message.content) 
         await message.delete()
