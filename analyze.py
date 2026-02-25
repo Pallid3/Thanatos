@@ -32,7 +32,3 @@ def compare_last_two_db(username, database):
     playcount2 = rows[-1][0]  # last
 
     return playcount2 - playcount1
-
-# Example usage:
-# diff = compare_last_two_db("kellad")
-# print("Playcount increase:", diff)

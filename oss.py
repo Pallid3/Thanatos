@@ -12,14 +12,6 @@ class OsuUser:
         self.pp = float(data["pp_raw"])
         self.timestamp = datetime.utcnow().isoformat()
 
-    def to_dict(self):
-        return {
-            "username": self.username,
-            "playcount": self.playcount,
-            "pp": self.pp,
-            "timestamp": self.timestamp
-        }
-
     def pane_andmed_baasi(self, database):
         connection = sqlite3.connect(database)
         cursor = connection.cursor()
@@ -35,13 +27,6 @@ class OsuUser:
         connection.commit()
         connection.close()
 
-    @classmethod
-    def from_dict(cls, data):
-        obj = cls.__new__(cls)
-        obj.username = data["username"]
-        obj.playcount = data["playcount"]
-        obj.pp = data["pp"]
-        return obj
 
 def make_user_request(username, API_KEY, database):
     # username = "kellad"         # or a numeric user ID
@@ -62,10 +47,3 @@ def make_user_request(username, API_KEY, database):
     filtered_data = OsuUser(user_data)
     filtered_data.pane_andmed_baasi(database)
     return
-
-def read_data():
-    entries = []
-    with open("osu_user.jsonl", "r") as f:
-        for line in f:
-            entries.append(json.loads(line))
-    return entries

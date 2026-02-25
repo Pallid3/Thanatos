@@ -12,26 +12,3 @@ class PhraseFilter:
             if all(word.lower() in text_lower for word in phrase):
                 return True
         return False
-
-# testing
-# f = PhraseFilter()
-# f.add_phrase(["create", "mod", "when"])
-# f.add_phrase(["badword", "kiisu"])
-
-# print(f.contains_banned("please create a mod when you can")) 
-# print(f.contains_banned("mod create something else when"))
-# print(f.contains_banned("create mod now"))
-# print(f.contains_banned("badword goes here"))
-# print(f.contains_banned("badword"))
-# print(f.contains_banned("kiisu badword"))
-# print(f.contains_banned("kiisu create mod owo"))
-
-# '''returned:
-# True
-# True
-# False
-# False
-# False
-# True
-# False
-# ''' # excpeted values
