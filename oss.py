@@ -12,14 +12,14 @@ class OsuUser:
         self.pp = float(data["pp_raw"])
         self.timestamp = datetime.utcnow().isoformat()
 
-    def pane_andmed_baasi(self, database):
+    def put_data_into_db(self, database):
         connection = sqlite3.connect(database)
         cursor = connection.cursor()
 
         command1 = """CREATE TABLE IF NOT EXISTS
         stats(id INTEGER PRIMARY KEY, username TEXT, playcount INT, pp FLOAT, timestamp TEXT)"""
         cursor.execute(command1)
-        # Ainuke tähtis osa. see salvestab andmed stats tabeli (ma loodan)
+        # Ainuke tähtis osa. see salvestab andmed stats tabeli (ma loodan) # Only important part, it will save data to the tabel (I hope)
         cursor.execute(
         "INSERT INTO stats (username, playcount, pp, timestamp) VALUES (?, ?, ?, ?)",
         (self.username, self.playcount, self.pp, self.timestamp)
@@ -29,7 +29,7 @@ class OsuUser:
 
 
 def make_user_request(username, API_KEY, database):
-    # username = "kellad"         # or a numeric user ID
+    # username = "kellad"
     username = str(username)
     API_KEY = str(API_KEY)
 
@@ -45,5 +45,5 @@ def make_user_request(username, API_KEY, database):
     user_data = data[0]
 
     filtered_data = OsuUser(user_data)
-    filtered_data.pane_andmed_baasi(database)
+    filtered_data.put_data_into_db(database)
     return

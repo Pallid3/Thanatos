@@ -26,7 +26,7 @@ with open("bad_words.txt", "r") as file: # this function gets line of words and 
         bad_words.append(word)
         f.add_phrase(word)
 
-targets = []
+targets = [] # list for tracked users (REQ)
 with open("targets.txt", "r") as file:
     for username in file:
         targets.append(username.strip())
@@ -40,7 +40,7 @@ bot = commands.Bot(command_prefix="+", intents=intents)
 
 @bot.event
 async def on_ready():
-    req.start()
+    req.start() # startng daily function
     print(f"We are cute with {bot.user.name}")
 
 @bot.event
@@ -66,8 +66,8 @@ async def hello(ctx):
 CHANNEL_ID = 830453487015428147  # replace
 
 @tasks.loop(time=time(hour=2, minute=0, tzinfo=timezone.utc))
-async def req():
-    print("Alustab REQ")
+async def req(): #requesting function
+    print("Alustab REQ") # Starting REQ
     for username in targets:
         oss.make_user_request(username, API_KEY, database)
         a = analyze.compare_last_two_db(username, database)
