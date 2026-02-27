@@ -31,4 +31,4 @@ def jsonl_to_db(jsonl_file="osu_user.jsonl", db_file="oss_stats.db"):
     print(f"Migration complete! Data stored in {db_file}")
 
 # Example usage: # Please use it only once, cuz it will dubilcate shit.
-# jsonl_to_db()
+# jsonl_to_db() # WARNING; I HAVEN'T TESTED IF THIS WORKS AFTER MOVING THIS FILE TO SCRIPTS FOLDER. PLEASE READ THE CODE BEFORE RUNNING THIS SCRIPT
