@@ -49,7 +49,10 @@ async def on_message(message):
         return
     
     if bot.user in message.mentions:
-        await message.channel.send(f"You thiniking of me >.<")
+        if message.author.id == 1002359051092508792:
+            await message.channel.send(f"Go away, {message.author.display_name}! (；¬д¬)")
+        else:
+            await message.channel.send(f"You thiniking of me >.<")
     
     if f.contains_banned(message.content):
         print(message.author, " tried to say ", message.content) 
