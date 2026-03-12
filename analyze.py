@@ -4,7 +4,7 @@ def username_exists(username, database):
     connection = sqlite3.connect(database)
     cursor = connection.cursor()
     cursor.execute(
-        "SELECT 1 FROM stats WHERE username = ? LIMIT 1",
+        "SELECT 1 FROM gamemode_stats WHERE username = ? LIMIT 1",
         (username,)
     )
     exists = cursor.fetchone() is not None
@@ -17,7 +17,7 @@ def compare_last_two_db(username, database):
 
     # Get all entries for this user, ordered by timestamp
     cursor.execute(
-        "SELECT playcount, timestamp FROM stats WHERE username = ? ORDER BY id ASC",
+        "SELECT playcount, timestamp FROM gamemode_stats WHERE username = ? ORDER BY id ASC",
         (username,)
     )
     rows = cursor.fetchall()
