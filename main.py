@@ -83,7 +83,7 @@ async def req(): #requesting function
 @bot.command()
 async def lasttwo(ctx, username: str = None):
     if not username:
-        await ctx.send("Please provide a username! Example: `!lasttwo kellad`")
+        await ctx.send("Please provide a username! Example: `+lasttwo kellad`")
         return
     if not analyze.username_exists(username, database):
         await ctx.send(f"Username `{username}` not found in the database.")

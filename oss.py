@@ -6,23 +6,24 @@ from datetime import datetime, time
 import sqlite3
 
 class OsuUser:
-    def __init__(self, data):
+    def __init__(self, data, gamemode_int):
         self.playcount = int(data["playcount"])
         self.username = data["username"]
         self.pp = float(data["pp_raw"])
         self.timestamp = datetime.utcnow().isoformat()
+        self.gamemode = int(gamemode_int)
 
     def put_data_into_db(self, database):
         connection = sqlite3.connect(database)
         cursor = connection.cursor()
 
         command1 = """CREATE TABLE IF NOT EXISTS
-        stats(id INTEGER PRIMARY KEY, username TEXT, playcount INT, pp FLOAT, timestamp TEXT)"""
+        gamemode_stats(id INTEGER PRIMARY KEY, username TEXT, playcount INT, pp FLOAT, timestamp TEXT, gamemode INT)"""
         cursor.execute(command1)
         # Ainuke tähtis osa. see salvestab andmed stats tabeli (ma loodan) # Only important part, it will save data to the tabel (I hope)
         cursor.execute(
-        "INSERT INTO stats (username, playcount, pp, timestamp) VALUES (?, ?, ?, ?)",
-        (self.username, self.playcount, self.pp, self.timestamp)
+        "INSERT INTO gamemode_stats (username, playcount, pp, timestamp, gamemode) VALUES (?, ?, ?, ?, ?)",
+        (self.username, self.playcount, self.pp, self.timestamp, self.gamemode)
         )
         connection.commit()
         connection.close()
@@ -44,6 +45,14 @@ def make_user_request(username, API_KEY, database):
     data = response.json()
     user_data = data[0]
 
-    filtered_data = OsuUser(user_data)
+    filtered_data = OsuUser(user_data, params["m"])
     filtered_data.put_data_into_db(database)
     return
+
+if __name__ == "__main__":
+    load_dotenv()
+    token = os.getenv('DISCORD_TOKEN')
+    API_KEY = os.getenv('OSU_API_KEY')
+
+    database = "oss_tests.db"
+    make_user_request(username="kellad", API_KEY=API_KEY, database=database)
