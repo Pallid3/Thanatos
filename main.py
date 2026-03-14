@@ -63,6 +63,11 @@ async def hello(ctx):
     print(ctx)
     await ctx.send(f"Hello {ctx.author.mention}!")
 
+@bot.command()
+async def github(ctx):
+    print(ctx)
+    await ctx.send(f"Project: https://github.com/Pallid3/Thanatos")
+
 CHANNEL_ID = 830453487015428147  # replace
 
 @tasks.loop(time=time(hour=2, minute=0, tzinfo=timezone.utc))
