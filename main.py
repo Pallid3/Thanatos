@@ -14,9 +14,14 @@ from filterer import PhraseFilter
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
 API_KEY = os.getenv('OSU_API_KEY')
-
 database = "oss_stats.db"
 
+hander = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
+intents = discord.Intents.default()
+intents.message_content = True
+intents.members = True
+
+bot = commands.Bot(command_prefix="+", intents=intents)
 
 f = PhraseFilter()
 bad_words = []
@@ -31,13 +36,6 @@ with open("targets.txt", "r") as file:
     for username in file:
         targets.append(username.strip())
 
-hander = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
-intents = discord.Intents.default()
-intents.message_content = True
-intents.members = True
-
-bot = commands.Bot(command_prefix="+", intents=intents)
-
 @bot.event
 async def on_ready():
     req.start() # startng daily function
@@ -47,7 +45,6 @@ async def on_ready():
 async def on_message(message):
     if message.author == bot.user:
         return
-    
     if bot.user in message.mentions:
         if message.author.id == 1002359051092508792:
             await message.channel.send(f"Go away, {message.author.display_name}! (；¬д¬)")
