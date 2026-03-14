@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import os
 import requests
 from time import sleep as py_sleep # pls don't get confclited :pray:
-from datetime import time, timezone
+from datetime import time, timezone, datetime
 
 import oss
 import analyze
@@ -60,12 +60,10 @@ async def on_message(message):
 
 @bot.command()
 async def hello(ctx):
-    print(ctx)
     await ctx.send(f"Hello {ctx.author.mention}!")
 
 @bot.command()
 async def github(ctx):
-    print(ctx)
     await ctx.send(f"Project: https://github.com/Pallid3/Thanatos")
 
 CHANNEL_ID = 830453487015428147  # replace
@@ -96,5 +94,34 @@ async def lasttwo(ctx, username: str = None):
     except ValueError as e:
         print("Error code: 727 ", e, )
         await ctx.send("Error code: 727")
+
+@bot.command()
+async def playcount(ctx, *args):
+    username = None
+    day_start = None
+    day_end = None
+
+    # Case: at least 3 arguments -> maybe dates + username
+    if len(args) >= 3:
+        try:
+            day_start = datetime.strptime(args[0], "%d.%m.%Y")
+            day_end = datetime.strptime(args[1], "%d.%m.%Y")
+
+            username = " ".join(args[2:])
+        except ValueError:
+            # If parsing fails, treat everything as username
+            day_start = None
+            day_end = None
+            username = " ".join(args)
+
+    # Case: no dates, only username
+    else:
+        username = " ".join(args)
+
+    print("Start date:", day_start)
+    print("End date:", day_end)
+    print("Username:", username)
+
+
 
 bot.run(token, log_handler=hander, log_level=logging.DEBUG)
