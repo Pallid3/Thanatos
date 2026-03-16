@@ -82,10 +82,13 @@ async def req(): #requesting function
 
 @bot.command()
 async def manualreq(ctx): #requesting function
+    print("ts")
     if message.author.id == 614078933515894804:
         await ctx.send("Green")
+        return
     else:
-        await ctx.send("Red")   
+        await ctx.send("Red")
+        return
         
 
 @bot.command()
