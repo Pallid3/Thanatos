@@ -81,6 +81,14 @@ async def req(): #requesting function
         py_sleep(2) # we sleep 2 seconds, cuz I doubt I can do many reqeuest at the time lol
 
 @bot.command()
+async def manualreq(ctx): #requesting function
+    if message.author.id == 614078933515894804:
+        await ctx.send("Green")
+    else:
+        await ctx.send("Red")   
+        
+
+@bot.command()
 async def lasttwo(ctx, username: str = None):
     if not username:
         await ctx.send("Please provide a username! Example: `+lasttwo kellad`")
