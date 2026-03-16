@@ -91,7 +91,7 @@ async def manualreq(ctx): #requesting function
             if ctx:
                 await ctx.send(f"{username} playcount increased by: {a}")
             print(f"{username} playcount increased by: {a}")
-            py_sleep(2) # we sleep 2 seconds, cuz I doubt I can do many reqeuest at the time lol
+            py_sleep(1.25) # we sleep 2 seconds, cuz I doubt I can do many reqeuest at the time lol
     else:
         await ctx.send("Red")
         return
