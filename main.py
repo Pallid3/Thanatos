@@ -14,7 +14,7 @@ from filterer import PhraseFilter
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
 API_KEY = os.getenv('OSU_API_KEY')
-database = "oss_stats.db"
+database = "test.db"
 
 hander = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
 intents = discord.Intents.default()
