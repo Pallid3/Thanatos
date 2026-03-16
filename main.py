@@ -84,8 +84,14 @@ async def req(): #requesting function
 async def manualreq(ctx): #requesting function
     print("ts")
     if ctx.author.id == 614078933515894804:
-        await ctx.send("Green")
-        return
+        print("Alustab REQ") # Starting REQ
+        for username in targets:
+            oss.make_user_request(username, API_KEY, "test.db")
+            a = analyze.compare_last_two_db(username, "test.db")
+            if ctx:
+                await ctx.send(f"{username} playcount increased by: {a}")
+            print(f"{username} playcount increased by: {a}")
+            py_sleep(2) # we sleep 2 seconds, cuz I doubt I can do many reqeuest at the time lol
     else:
         await ctx.send("Red")
         return
