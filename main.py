@@ -81,13 +81,15 @@ async def req(): #requesting function
         py_sleep(2) # we sleep 2 seconds, cuz I doubt I can do many reqeuest at the time lol
 
 @bot.command()
-async def manualreq(ctx): #requesting function
-    print("ts")
+async def manualreq(ctx, database2): #requesting function
+    if not database2:
+        await ctx.send("Please provide a database! Example: `+manualreq oss_stats.db`")
+        return
     if ctx.author.id == 614078933515894804:
         print("Alustab REQ") # Starting REQ
         for username in targets:
-            oss.make_user_request(username, API_KEY, "test.db")
-            a = analyze.compare_last_two_db(username, "test.db")
+            oss.make_user_request(username, API_KEY, database2)
+            a = analyze.compare_last_two_db(username, database2)
             if ctx:
                 await ctx.send(f"{username} playcount increased by: {a}")
             print(f"{username} playcount increased by: {a}")
