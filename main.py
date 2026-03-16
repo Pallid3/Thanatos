@@ -81,7 +81,7 @@ async def req(): #requesting function
         py_sleep(2) # we sleep 2 seconds, cuz I doubt I can do many reqeuest at the time lol
 
 @bot.command()
-async def manualreq(ctx, database2): #requesting function
+async def manualreq(ctx, database2: str = None): #requesting function
     if not database2:
         await ctx.send("Please provide a database! Example: `+manualreq oss_stats.db`")
         return
