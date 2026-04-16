@@ -58,6 +58,21 @@ async def on_message(message):
     
     await bot.process_commands(message)
 
+@bot.event
+async def on_raw_message_edit(payload):
+    msg = payload.message  # ← THIS LINE CHANGES EVERYTHING
+
+    if msg is None:
+        return  # not cached, fallback needed if you care
+
+    if msg.author == bot.user:
+        return
+
+    if f.contains_banned(msg.content):
+        print(msg.author, " tried to say ", msg.content)
+        await msg.delete()
+        await msg.channel.send(f"{msg.author.mention}, don't use this word, you silly baka ! >:c")
+
 @bot.command()
 async def hello(ctx):
     await ctx.send(f"Hello {ctx.author.mention}!")
