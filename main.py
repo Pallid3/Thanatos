@@ -60,10 +60,10 @@ async def on_message(message):
 
 @bot.event
 async def on_raw_message_edit(payload):
-    msg = payload.message  # ← THIS LINE CHANGES EVERYTHING
+    msg = payload.message
 
     if msg is None:
-        return  # not cached, fallback needed if you care
+        return  # not cached, fallback needed if you care # idk what my gpt is talking about here ngl.
 
     if msg.author == bot.user:
         return
