@@ -43,6 +43,9 @@ def make_user_request(username, API_KEY, database):
 
     response = requests.get(url, params=params)
     data = response.json()
+    if not data:
+        print(f"No data returned for {username}")
+        return
     user_data = data[0]
 
     filtered_data = OsuUser(user_data, params["m"])
