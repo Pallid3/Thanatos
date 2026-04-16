@@ -131,6 +131,13 @@ async def lasttwo(ctx, username: str = None):
 
 @bot.command()
 async def playcount(ctx, *args):
+    if ctx.author.id != 614078933515894804:
+        print(ctx.username + "tried playcount idk")
+        return
+    else: 
+        print(ctx.username + "tried playcount idk")
+        return
+    
     username = None
     day_start = None
     day_end = None
